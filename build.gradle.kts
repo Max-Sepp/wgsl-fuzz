@@ -18,6 +18,7 @@ val antlrVersion: String = "4.10"
 val jacksonVersion: String = "2.19.0"
 val ktorVersion: String = "3.1.3"
 val logbackVersion: String = "1.5.18"
+val junitVersion: String = "5.13.3"
 
 plugins {
     kotlin("jvm") version "2.1.21"
@@ -39,7 +40,9 @@ repositories {
 
 dependencies {
     antlr("org.antlr:antlr4:$antlrVersion")
+
     testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
 
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")

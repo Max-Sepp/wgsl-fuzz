@@ -23,15 +23,21 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedClass
+import org.junit.jupiter.params.provider.ValueSource
 import java.io.File
 import java.util.Random
 
-class TransformReduceTests {
+@ParameterizedClass
+@ValueSource(strings = ["binarysearch_tree", "bubblesort_flag", "counting_sort", "heapify", "reverse_linked_list"])
+class TransformReduceTests(
+    private val filenameNoExtension: String,
+) {
     @Test
     fun testAddDeadReturns() {
         testTransformationAndReduction(
             42,
-            "bubblesort_flag",
+            filenameNoExtension,
             ::addDeadReturns,
         )
     }
@@ -40,7 +46,7 @@ class TransformReduceTests {
     fun testAddDeadBreaks() {
         testTransformationAndReduction(
             43,
-            "bubblesort_flag",
+            filenameNoExtension,
             ::addDeadBreaks,
         )
     }
@@ -49,7 +55,7 @@ class TransformReduceTests {
     fun testAddDeadContinues() {
         testTransformationAndReduction(
             44,
-            "bubblesort_flag",
+            filenameNoExtension,
             ::addDeadContinues,
         )
     }
@@ -58,7 +64,7 @@ class TransformReduceTests {
     fun testAddIdentityOperations() {
         testTransformationAndReduction(
             45,
-            "bubblesort_flag",
+            filenameNoExtension,
             ::addIdentityOperations,
         )
     }
@@ -67,7 +73,7 @@ class TransformReduceTests {
     fun testMultipleTransformations() {
         testTransformationAndReduction(
             45,
-            "bubblesort_flag",
+            filenameNoExtension,
         ) { shaderJob, fuzzerSettings ->
             addIdentityOperations(addDeadReturns(addIdentityOperations(shaderJob, fuzzerSettings), fuzzerSettings), fuzzerSettings)
         }

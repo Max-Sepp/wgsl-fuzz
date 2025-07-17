@@ -129,3 +129,45 @@ private fun generateArbitraryBool(
         },
     )
 }
+
+private fun generateArbitraryI32(
+    depth: Int,
+    sideEffectsAllowed: Boolean,
+    fuzzerSettings: FuzzerSettings,
+    shaderJob: ShaderJob,
+    scope: Scope,
+): AugmentedExpression.ArbitraryExpression {
+    val nonRecursiveChoices: List<Pair<Int, () -> Expression>> =
+        listOfNotNull(
+            fuzzerSettings.arbitraryI32ExpressionWeights.literal(depth) to {
+                Expression.IntLiteral(
+                    text = TODO(),
+                )
+            },
+            if (isVariableOfTypeInScope(scope, Type.I32)) {
+                fuzzerSettings.arbitraryI32ExpressionWeights
+                    .variableFromScope(depth) to {
+                    randomVariableFromScope(scope, Type.I32, fuzzerSettings)!!
+                }
+            } else {
+                null
+            },
+        )
+
+    val recursiveChoices: List<Pair<Int, () -> Expression>> =
+        listOf(
+            fuzzerSettings.arbitraryI32ExpressionWeights.addition(depth) to { TODO() },
+            fuzzerSettings.arbitraryI32ExpressionWeights.subtraction(depth) to { TODO() },
+            fuzzerSettings.arbitraryI32ExpressionWeights.multiplication(depth) to { TODO() },
+            fuzzerSettings.arbitraryI32ExpressionWeights.division(depth) to { TODO() },
+            fuzzerSettings.arbitraryI32ExpressionWeights.remainder(depth) to { TODO() },
+        )
+
+    return AugmentedExpression.ArbitraryExpression(
+        if (depth == fuzzerSettings.maxDepth) {
+            choose(fuzzerSettings, nonRecursiveChoices)
+        } else {
+            choose(fuzzerSettings, recursiveChoices + nonRecursiveChoices)
+        },
+    )
+}

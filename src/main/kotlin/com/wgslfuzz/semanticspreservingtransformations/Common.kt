@@ -103,6 +103,19 @@ interface FuzzerSettings {
     val arbitraryBooleanExpressionWeights: ArbitraryBooleanExpressionWeights
         get() = ArbitraryBooleanExpressionWeights()
 
+    class ArbitraryI32ExpressionWeights(
+        val variableFromScope: (depth: Int) -> Int = { 1 },
+        val literal: (depth: Int) -> Int = { 1 },
+        val addition: (depth: Int) -> Int = { 1 },
+        val subtraction: (depth: Int) -> Int = { 1 },
+        val multiplication: (depth: Int) -> Int = { 1 },
+        val division: (depth: Int) -> Int = { 1 },
+        val remainder: (depth: Int) -> Int = { 1 },
+    )
+
+    val arbitraryI32ExpressionWeights: ArbitraryI32ExpressionWeights
+        get() = ArbitraryI32ExpressionWeights()
+
     fun injectDeadBreak(): Boolean = randomInt(100) < 50
 
     fun injectDeadContinue(): Boolean = randomInt(100) < 50

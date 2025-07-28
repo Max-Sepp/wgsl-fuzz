@@ -337,13 +337,13 @@ private fun literalExprFromBytes(
 
 private fun Type.Scalar.toTypeDecl(): TypeDecl.ScalarTypeDecl =
     when (this) {
-        Type.Bool -> TypeDecl.Bool()
-        Type.I32 -> TypeDecl.I32()
-        Type.U32 -> TypeDecl.U32()
-        Type.F16 -> TypeDecl.F16()
-        Type.F32 -> TypeDecl.F32()
-        Type.AbstractFloat -> throw UnsupportedOperationException("AbstractFloat cannot converted to TypeDecl")
-        Type.AbstractInteger -> throw UnsupportedOperationException("AbstractInteger cannot converted to TypeDecl")
+        is Type.Bool -> TypeDecl.Bool()
+        is Type.I32 -> TypeDecl.I32()
+        is Type.U32 -> TypeDecl.U32()
+        is Type.F16 -> TypeDecl.F16()
+        is Type.F32 -> TypeDecl.F32()
+        is Type.AbstractFloat -> throw UnsupportedOperationException("AbstractFloat cannot converted to TypeDecl")
+        is Type.AbstractInteger -> throw UnsupportedOperationException("AbstractInteger cannot converted to TypeDecl")
     }
 
 private fun Type.toTypeDecl(): TypeDecl =
